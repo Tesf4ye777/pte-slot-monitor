@@ -1,0 +1,38 @@
+{
+  "manifest_version": 3,
+  "name": "PTE Slot Monitor",
+  "description": "Refreshes the open Pearson VUE page and monitors its loaded PTE Academic slots without replaying internal requests.",
+  "version": "0.6.1",
+  "minimum_chrome_version": "120",
+  "permissions": ["storage", "notifications", "tabs", "offscreen", "alarms"],
+  "host_permissions": [
+    "https://findseats.pearsonvue.com/*",
+    "https://mypte.pearsonpte.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "PTE Slot Monitor",
+    "default_popup": "popup/index.html",
+    "default_icon": {
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "128": "icons/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://findseats.pearsonvue.com/testtaker/registration/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["popup/index.html", "popup/index.js", "popup/index.css"],
+      "matches": ["https://findseats.pearsonvue.com/*"]
+    }
+  ]
+}
